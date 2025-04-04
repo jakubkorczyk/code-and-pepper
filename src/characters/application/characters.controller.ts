@@ -6,21 +6,26 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { CreateCharacterDto } from './dto/create.character.dto';
 import { ResourceCreatedDto } from '../../common/application/resource.created.dto';
 import { CharactersService } from '../domain/characters.service';
 import { CharactersListDto } from './dto/characters.list.dto';
 import { CharacterInterface } from '../types/character.interface';
-import { CharacterDto } from './dto/character.dto';
 
 @Controller('characters')
 export class CharactersController {
   constructor(private readonly charactersService: CharactersService) {}
 
   @Get()
-  async getCharacters(): Promise<CharactersListDto> {
-    return { characters: await this.charactersService.getCharacters() };
+  async getCharacters(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ): Promise<CharactersListDto> {
+    return {
+      characters: await this.charactersService.getCharacters(page, limit),
+    };
   }
 
   @Get('/:id')

@@ -10,6 +10,8 @@ import { Repository } from 'typeorm';
 import { CharacterEntity } from '../infrastructure/entities/character.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { ErrorsInterceptor } from '../../common/errors/error.filter';
+import { EpisodesEnum } from '../types/episodes.enum';
+import { CreateCharacterInterface } from '../types/create.character.interface';
 
 describe('Characters endpoints (e2e)', () => {
   let app: INestApplication;
@@ -22,9 +24,9 @@ describe('Characters endpoints (e2e)', () => {
     { name: 1, episodes: ['NEW_HOPE', 'PHANTOM_MENACE'], planet: 'Tatooine' },
     { name: 'Luke', episodes: ['NEW_HOPE'], planet: 1 },
   ];
-  const correctBody = {
+  const correctBody: CreateCharacterInterface = {
     name: 'Luke',
-    episodes: ['NEW_HOPE', 'PHANTOM_MENACE'],
+    episodes: [EpisodesEnum.NEW_HOPE, EpisodesEnum.PHANTOM_MENACE],
     planet: 'Tatooine',
   };
 
@@ -73,6 +75,28 @@ describe('Characters endpoints (e2e)', () => {
         },
       );
       expect(charactersWithoutId).toMatchSnapshot();
+    });
+
+    it('returns 200 and uses pagination', async () => {
+      const limit = 20;
+      const charactersCount = 100;
+      const iterations = Array.from({ length: charactersCount });
+      const characters = iterations.map(() => correctBody);
+      await charactersRepository.save(characters);
+
+      const resultPageOne = await request(app.getHttpServer()).get(
+        `/characters?page=1&limit=${limit}`,
+      );
+      const resultPageTwo = await request(app.getHttpServer()).get(
+        `/characters?page=2&limit=${limit}`,
+      );
+
+      expect(resultPageOne.status).toBe(200);
+      expect(resultPageOne.body.characters.length).toBe(limit);
+      expect(resultPageTwo.body.characters.length).toBe(limit);
+      expect(resultPageTwo.body.characters).not.toEqual(
+        expect.arrayContaining(resultPageOne.body.characters),
+      );
     });
   });
 

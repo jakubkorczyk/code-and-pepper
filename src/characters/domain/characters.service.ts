@@ -22,8 +22,16 @@ export class CharactersService {
     };
   }
 
-  public async getCharacters(): Promise<Array<CharacterInterface>> {
-    return this.characterRepository.find();
+  public async getCharacters(
+    page: number = 1,
+    limit: number = 10,
+  ): Promise<Array<CharacterInterface>> {
+    const offset = (page - 1) * limit;
+
+    return this.characterRepository.find({
+      skip: offset,
+      take: limit,
+    });
   }
 
   public async getCharacter(id: string): Promise<CharacterInterface> {

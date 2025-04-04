@@ -1,7 +1,5 @@
-import { EpisodesEnum } from './episodes.enum';
+import { CreateCharacterInterface } from './create.character.interface';
 
-export interface CharacterInterface {
-  name: string;
-  episodes: Array<EpisodesEnum>;
-  planet?: string;
+export interface CharacterInterface extends CreateCharacterInterface {
+  id: string;
 }

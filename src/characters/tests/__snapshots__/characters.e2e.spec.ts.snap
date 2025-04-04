@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Characters endpoints (e2e) GET /characters returns 200 and list of characters 1`] = `
+[
+  {
+    "episodes": [
+      "NEW_HOPE",
+      "PHANTOM_MENACE",
+    ],
+    "name": "Luke",
+    "planet": "Tatooine",
+  },
+  {
+    "episodes": [
+      "NEW_HOPE",
+      "PHANTOM_MENACE",
+    ],
+    "name": "Luke",
+    "planet": "Tatooine",
+  },
+  {
+    "episodes": [
+      "NEW_HOPE",
+      "PHANTOM_MENACE",
+    ],
+    "name": "Luke",
+    "planet": "Tatooine",
+  },
+  {
+    "episodes": [
+      "NEW_HOPE",
+      "PHANTOM_MENACE",
+    ],
+    "name": "Luke",
+    "planet": "Tatooine",
+  },
+  {
+    "episodes": [
+      "NEW_HOPE",
+      "PHANTOM_MENACE",
+    ],
+    "name": "Luke",
+    "planet": "Tatooine",
+  },
+  {
+    "episodes": [
+      "NEW_HOPE",
+      "PHANTOM_MENACE",
+    ],
+    "name": "Luke",
+    "planet": "Tatooine",
+  },
+  {
+    "episodes": [
+      "NEW_HOPE",
+      "PHANTOM_MENACE",
+    ],
+    "name": "Luke",
+    "planet": "Tatooine",
+  },
+  {
+    "episodes": [
+      "NEW_HOPE",
+      "PHANTOM_MENACE",
+    ],
+    "name": "Luke",
+    "planet": "Tatooine",
+  },
+  {
+    "episodes": [
+      "NEW_HOPE",
+      "PHANTOM_MENACE",
+    ],
+    "name": "Luke",
+    "planet": "Tatooine",
+  },
+  {
+    "episodes": [
+      "NEW_HOPE",
+      "PHANTOM_MENACE",
+    ],
+    "name": "Luke",
+    "planet": "Tatooine",
+  },
+]
+`;

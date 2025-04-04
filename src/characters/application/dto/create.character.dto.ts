@@ -1,8 +1,8 @@
 import { IsArray, IsEnum, IsOptional, IsString } from 'class-validator';
-import { EpisodesEnum } from '../types/episodes.enum';
-import { CharacterInterface } from '../types/character.interface';
+import { EpisodesEnum } from '../../types/episodes.enum';
+import { CreateCharacterInterface } from '../../types/create.character.interface';
 
-export class CharacterDto implements CharacterInterface {
+export class CreateCharacterDto implements CreateCharacterInterface {
   @IsString()
   name: string;
 

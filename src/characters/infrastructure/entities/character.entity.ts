@@ -1,5 +1,7 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { EpisodesEnum } from '../../types/episodes.enum';
 
+@Entity('characters')
 export class CharacterEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -8,5 +10,8 @@ export class CharacterEntity {
   name: string;
 
   @Column({ type: 'varchar', length: 64, nullable: true })
-  planet: string;
+  planet?: string;
+
+  @Column('text', { array: true })
+  episodes: EpisodesEnum[];
 }

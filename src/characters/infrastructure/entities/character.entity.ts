@@ -1,0 +1,12 @@
+import { Column, PrimaryGeneratedColumn } from 'typeorm';
+
+export class CharacterEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: false })
+  name: string;
+
+  @Column({ type: 'varchar', length: 64, nullable: true })
+  planet: string;
+}

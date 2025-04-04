@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
 } from '@nestjs/common';
 import { CharacterDto } from './character.dto';
 import { ResourceCreatedDto } from '../../common/application/resource.created.dto';
@@ -27,10 +28,10 @@ export class CharactersController {
     };
   }
 
-  @Patch(':id')
+  @Put(':id')
   async updateCharacter(
     @Param('id') id: string,
-    @Body() character: UpdateCharacterDto,
+    @Body() character: CharacterDto,
   ): Promise<void> {}
 
   @Delete(':id')

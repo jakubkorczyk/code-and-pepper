@@ -31,32 +31,35 @@ describe('Characters endpoints (e2e)', () => {
     });
   });
 
+  const incorectBodyCases = [
+    { episodes: ['NEW_HOPE'], planet: 'Tatooine' },
+    { name: 'Luke', episodes: ['WRONG_EPISODE'], planet: 'Tatooine' },
+    { name: 'Luke', planet: 'Tatooine' },
+    { name: 1, episodes: ['NEW_HOPE'], planet: 'Tatooine' },
+    { name: 'Luke', episodes: ['NEW_HOPE'], planet: 1 },
+  ];
+
   describe('POST /characters', () => {
-    it.each([
-      { episodes: ['NEW_HOPE'], planet: 'Tatooine' },
-      { name: 'Luke', episodes: ['WRONG_EPISODE'], planet: 'Tatooine' },
-      { name: 'Luke', planet: 'Tatooine' },
-      { name: 1, episodes: ['NEW_HOPE'], planet: 'Tatooine' },
-      { name: 'Luke', episodes: ['NEW_HOPE'], planet: 1 },
-    ])('validates body and returns 400 if its not correct', (body) => {
-      return request(app.getHttpServer())
-        .post('/characters')
-        .send(body)
-        .expect(400);
-    });
+    it.each(incorectBodyCases)(
+      'validates body and returns 400 if its not correct',
+      (body) => {
+        return request(app.getHttpServer())
+          .post('/characters')
+          .send(body)
+          .expect(400);
+      },
+    );
   });
 
-  describe('PATCH /characters/:id', () => {
-    it.each([
-      { episodes: ['WRONG_EPISODE'], planet: 'Tatooine' },
-      { name: 1, planet: 'Tatooine' },
-      { name: 1, planet: 'Tatooine' },
-      { planet: 1 },
-    ])('validates body and returns 400 if its not correct', (body) => {
-      return request(app.getHttpServer())
-        .patch('/characters/id')
-        .send(body)
-        .expect(400);
-    });
+  describe('PUT /characters/:id', () => {
+    it.each(incorectBodyCases)(
+      'validates body and returns 400 if its not correct',
+      (body) => {
+        return request(app.getHttpServer())
+          .put('/characters/id')
+          .send(body)
+          .expect(400);
+      },
+    );
   });
 });

@@ -33,3 +33,7 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## Api documentation
+
+The api documentation is available under /api path

@@ -1,5 +1,6 @@
 import {
   ArgumentsHost,
+  BadRequestException,
   Catch,
   ExceptionFilter,
   HttpStatus,
@@ -12,19 +13,33 @@ export class ErrorsInterceptor implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
 
-    let status = exception.status || 500;
+    let statusCode = exception.status || 500;
     let message = exception.message || 'Internal Server Error';
+    const error = exception.name;
 
     switch (true) {
       case exception instanceof EntityNotFoundError:
-        status = HttpStatus.NOT_FOUND;
+        statusCode = HttpStatus.NOT_FOUND;
         message = exception.message;
+        break;
+      case exception instanceof BadRequestException:
+        const badRequestResponse = exception.getResponse() as
+          | string
+          | Record<string, unknown>;
+
+        if (typeof badRequestResponse === 'string') {
+          message = badRequestResponse;
+        } else if (typeof badRequestResponse === 'object') {
+          message = badRequestResponse.message;
+        }
+        break;
     }
 
-    response.status(status).json({
-      statusCode: status,
+    response.status(statusCode).json({
+      statusCode,
       timestamp: new Date().toISOString(),
-      message: message,
+      message,
+      error,
     });
   }
 }

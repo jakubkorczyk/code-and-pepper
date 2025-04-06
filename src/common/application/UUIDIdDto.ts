@@ -1,8 +1,7 @@
-import { CreateCharacterDto } from './create.character.dto';
 import { IsUUID } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CharacterDto extends CreateCharacterDto {
+export class UUIDIdDto {
   @ApiProperty()
   @IsUUID()
   id: string;

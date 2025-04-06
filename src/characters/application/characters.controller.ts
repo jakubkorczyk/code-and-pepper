@@ -3,16 +3,18 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Post,
   Put,
   Query,
 } from '@nestjs/common';
 import { CreateCharacterDto } from './dto/create.character.dto';
-import { ResourceCreatedDto } from '../../common/application/resource.created.dto';
+import { UUIDIdDto } from '../../common/application/UUIDIdDto';
 import { CharactersService } from '../domain/characters.service';
 import { CharactersListDto } from './dto/characters.list.dto';
 import { CharacterInterface } from '../types/character.interface';
+import { PaginationDto } from '../../common/application/pagination.dto';
 
 @Controller('characters')
 export class CharactersController {
@@ -20,8 +22,7 @@ export class CharactersController {
 
   @Get()
   async getCharacters(
-    @Query('page') page: number,
-    @Query('limit') limit: number,
+    @Query() { page, limit }: PaginationDto,
   ): Promise<CharactersListDto> {
     return {
       characters: await this.charactersService.getCharacters(page, limit),
@@ -29,27 +30,30 @@ export class CharactersController {
   }
 
   @Get('/:id')
-  async getCharacter(@Param('id') id: string): Promise<CharacterInterface> {
+  async getCharacter(@Param() { id }: UUIDIdDto): Promise<CharacterInterface> {
     return this.charactersService.getCharacter(id);
   }
 
   @Post()
+  @HttpCode(201)
   async createCharacter(
     @Body() character: CreateCharacterDto,
-  ): Promise<ResourceCreatedDto> {
+  ): Promise<UUIDIdDto> {
     return this.charactersService.createCharacter(character);
   }
 
   @Put(':id')
+  @HttpCode(204)
   async updateCharacter(
-    @Param('id') id: string,
+    @Param() { id }: UUIDIdDto,
     @Body() character: CreateCharacterDto,
   ): Promise<void> {
     return this.charactersService.updateCharacter(id, character);
   }
 
   @Delete(':id')
-  async deleteCharacter(@Param('id') id: string): Promise<void> {
+  @HttpCode(204)
+  async deleteCharacter(@Param() { id }: UUIDIdDto): Promise<void> {
     return this.charactersService.removeCharacter(id);
   }
 }

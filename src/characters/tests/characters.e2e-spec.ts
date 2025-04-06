@@ -132,7 +132,7 @@ describe('Characters endpoints (e2e)', () => {
       },
     );
 
-    it('Returns 200 and id of created character', async () => {
+    it('Returns 201 and id of created character', async () => {
       const response = await request(app.getHttpServer())
         .post('/characters')
         .send(correctBody);
@@ -170,7 +170,7 @@ describe('Characters endpoints (e2e)', () => {
         .put(`/characters/${id}`)
         .send(updatedBody);
 
-      expect(updateResult.status).toBe(200);
+      expect(updateResult.status).toBe(204);
 
       const updatedCharacter = await charactersRepository.findOne({
         where: { id },
@@ -200,7 +200,7 @@ describe('Characters endpoints (e2e)', () => {
         `/characters/${id}`,
       );
 
-      expect(deleteResult.status).toBe(200);
+      expect(deleteResult.status).toBe(204);
 
       return request(app.getHttpServer()).get(`/characters/${id}`).expect(404);
     });
